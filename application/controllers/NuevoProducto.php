@@ -92,10 +92,33 @@ class NuevoProducto extends CI_Controller
     echo json_encode($respuesta);
   }
 
+  public function subirImagen()
+  {
+    $config['upload_path'] = './uploads/imagenes/';
+    $config['allowed_types'] = 'gif|jpg|png|jpeg';
+    $config['max_size'] = '2048';
+    $config['max_width'] = '2024';
+    $config['max_height'] = '2008';
+
+    $this->load->library('upload', $config);
+  }
+  if (!$this->upload->do_upload("fileImagen")) {
+    $this->load->view('header',$dataHeader);
+    $this->load->view('sidebar',$dataSidebar);
+    $this->load->view('inventario/nuevoProducto',$data);
+    $this->load->view('main-footer');
+    $dataFooter=array(
+      'scripts'=> "<script src='".base_url()."js/admin.js'></script>"
+    );
+    $dataFooter['scripts'].="<script src='".base_url()."js/tema.js'></script>";
+    $this->load->view('footer',$dataFooter);
+    
+   }
 
 
   public function addNewItem()
   {
+
     $codigo = $this->input->post('codigo');
     $descripcion = $this->input->post('descripcion');
     $costo = $this->input->post('costo');

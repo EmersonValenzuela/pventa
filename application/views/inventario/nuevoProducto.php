@@ -1,9 +1,4 @@
 
-
-
-
-
-
 <!-- ******************************************************************************************************************* -->
 <!-- ******************************************************************************************************************* -->
 <!-- Content Wrapper. Contains page content -->
@@ -162,9 +157,9 @@
                 ?>
               </select>
             </div>
-
+            <!--Pruba01-->
             <div class="clearfix"></div><br>
-            
+
             <div class="col-md-7 col-lg-7 col-xs-12">
               <button type="submit" class="btn btn-block btn-primary btn-lg">Agregar Nuevo Producto</button>
             </div>
