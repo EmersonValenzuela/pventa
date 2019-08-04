@@ -27,7 +27,7 @@
           <h3 class="box-title">Agregar Nuevo Producto</h3>
         </div>
         <div class="box-body">
-          <form id="formNewItem" autocomplete="off" enctype="multipart/form-data">
+          <form action="<?= base_url(); ?>nuevoProducto/addNewItem" id="formNewItem" autocomplete="off" enctype="multipart/form-data">
             <div class="col-md-3 col-lg-2 col-xs-12">
               <label for="codigo">Código de producto:</label>
             </div>
@@ -158,6 +158,23 @@
               </select>
             </div>
             <!--Pruba01-->
+            <div class="clearfix"></div><br>
+
+            <div class="col-md-3 col-lg-2 col-xs-12">
+              <label for="codigo">Nombre de imagen</label>
+            </div>
+
+            <div class="col-md-5 col-lg-5 col-xs-12">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-file" aria-hidden="true"></i>
+                </span>
+                <input type="text" name="titImagen" id="titImagen" placeholder="Nombre de Imagen" class="form-control" required>
+                <input type="file" name="getImagen" id="getImagen"  value="agregar">
+              </div>
+
+            </div>
+
             <div class="clearfix"></div><br>
 
             <div class="col-md-7 col-lg-7 col-xs-12">

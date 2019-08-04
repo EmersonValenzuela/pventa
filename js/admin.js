@@ -253,16 +253,23 @@ $('body').on('submit', '#formUpdateOffer', function () {
   /* ********************************************************
   formulario nuevo producto
   ********************************************************* */
+
+
   $('body').on('submit', '#formNewItem', function () {
     var xcodigox =  $("#codigo").val();
       if(xcodigox.length < 13){
           alert("El código debe tener 13 digitos.");
           return false;
       }
+      var formData = new formData($("#formNewItem").get(0));
+      contentType = false;
+      processData = false;
     $.ajax({
       url: base_url + 'nuevoProducto/addNewItem',
-      data: $(this).serialize(),
+      data: formData,
       type: 'POST',
+      contentType: false,
+      processData: false,
       // dataType: "json",
       success: function (resultado) {
         if(resultado == "1"){
@@ -275,6 +282,8 @@ $('body').on('submit', '#formUpdateOffer', function () {
           $("#precio").val("");
           $("#pmayoreo").val("");
           $("#cmayoreo").val("");
+          $("#titImagen").val("");
+          $("#getImagen").val("");
           esconderAlerta();
         }
         else if(resultado == "2"){

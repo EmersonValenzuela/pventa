@@ -92,28 +92,20 @@ class NuevoProducto extends CI_Controller
     echo json_encode($respuesta);
   }
 
-  public function subirImagen()
-  {
-    $config['upload_path'] = './uploads/imagenes/';
-    $config['allowed_types'] = 'gif|jpg|png|jpeg';
-    $config['max_size'] = '2048';
-    $config['max_width'] = '2024';
-    $config['max_height'] = '2008';
+    /*if (!$this->upload->do_upload("fileImagen")) {
+      $this->load->view('header',$dataHeader);
+      $this->load->view('sidebar',$dataSidebar);
+      $this->load->view('inventario/nuevoProducto',$data);
+      $this->load->view('main-footer');
+      $dataFooter=array(
+        'scripts'=> "<script src='".base_url()."js/admin.js'></script>"
+      );
+      $dataFooter['scripts'].="<script src='".base_url()."js/tema.js'></script>";
+      $this->load->view('footer',$dataFooter);
 
-    $this->load->library('upload', $config);
-  }
-  if (!$this->upload->do_upload("fileImagen")) {
-    $this->load->view('header',$dataHeader);
-    $this->load->view('sidebar',$dataSidebar);
-    $this->load->view('inventario/nuevoProducto',$data);
-    $this->load->view('main-footer');
-    $dataFooter=array(
-      'scripts'=> "<script src='".base_url()."js/admin.js'></script>"
-    );
-    $dataFooter['scripts'].="<script src='".base_url()."js/tema.js'></script>";
-    $this->load->view('footer',$dataFooter);
-    
-   }
+    }else {*/
+
+    //}
 
 
   public function addNewItem()
@@ -128,6 +120,26 @@ class NuevoProducto extends CI_Controller
     $departamento = $this->input->post('departamento');
     $tipoVenta = $this->input->post('tipoVenta');
     $idProveedor = $this->input->post('proveedor');
+    //SubirImagen
+
+    $ram = $this->input->post('titImagen');
+    $file_name = $_FILES['getImagen']['name'];
+    $tmp = explode('.', $file_name);
+    $extension_img = end($tmp);
+    $user_img_profile = $ram . '.' . $extension_img;
+
+    $config['upload_path'] = './uploads/imgenes/';
+//  'allowed_types' => "gif|jpg|jpeg|png|iso|dmg|zip|rar|doc|docx|xls|xlsx|ppt|pptx|csv|ods|odt|odp|pdf|rtf|sxc|sxi|txt|exe|avi|mpeg|mp3|mp4|3gp",
+    $config['allowed_types'] = 'gif|jpg|jpeg|png';
+    $config['max_size'] = '5000000';
+    $config['quality'] = '90%';
+    $config['file_name'] = $user_img_profile;
+    $this->load->library('upload', $config);
+    if (!$this->upload->do_upload()) {
+          $this->session->set_flashdata('message_error', $this->upload->display_errors());
+          $this->form_user_profile($id_user);
+          }
+
     $datos = array(
       'codigo' => $codigo,
       'descripcion' => $descripcion,
@@ -137,7 +149,8 @@ class NuevoProducto extends CI_Controller
       'cantidadMayoreo' => $cmayoreo,
       'idDepartamento' => $departamento,
       'idtipo'=>$tipoVenta,
-      'idProveedor'=>$idProveedor
+      'idProveedor'=>$idProveedor,
+      'imagen' => $user_img_profile
     );
 
     if(     $this->consultas->comprobarCodigo($codigo)     ){
@@ -147,6 +160,10 @@ class NuevoProducto extends CI_Controller
     echo "1"; // codigo 1 significa que termino con normalidad
   }
 
+  public function crearMiniatura($file_name)
+  {
+
+  }
 
   public function gencodebar()
   {
